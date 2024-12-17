@@ -34,7 +34,7 @@ class PacManGUI:
                     )
                 elif cell == "P":
                     self.canvas.create_image(
-                        (x + 0.2) * 20, (y + 0.2) * 20, image=self.pacman_image
+                        (x + 0.5) * 20, (y + 0.5) * 20, image=self.pacman_image
                     )
                 elif cell == "G":
                     self.canvas.create_oval(
