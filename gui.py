@@ -4,7 +4,7 @@ class PacManGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Pac-Man Game")
-        self.canvas = tk.Canvas(root, width=400, height=400, bg="black")
+        self.canvas = tk.Canvas(root, width=580, height=500, bg="black")
         self.canvas.pack()
         self.maze = None
         self.pacman = None
@@ -46,12 +46,13 @@ class PacManGUI:
 
     def show_score(self, score):
         self.canvas.create_text(
-            200, 10, text=f"Score: {score}", fill="white", font=("Arial", 16)
-        )
+            300, 440, text=f"Score: {score}", fill="#FFFF00", font=("Courier", 18, "bold")  # Bright yellow, retro style
+    )
 
     def show_timer(self, time_left):
         self.canvas.create_text(
-            200, 30, text=f"Time Left: {time_left}s", fill="white", font=("Arial", 16)
-        )
+            300, 475, text=f"Time Left: {time_left}s", fill="#FF0000", font=("Courier", 18, "bold")  # Red timer
+    )
+
 
 

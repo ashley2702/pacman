@@ -6,8 +6,6 @@ from ghost import Ghost
 from menu import Menu
 from timer import Timer
 import random
-import threading
-
 
 
 def setup_game(gui):
@@ -34,22 +32,18 @@ def setup_game(gui):
             if maze.is_empty(x, y):
                 maze.place_dot(x, y)
 
-    def spawn_fruits():
-        while True:
-            threading.Event().wait(5)  # Wait 10 seconds
-            for _ in range(2):  # Spawn two fruits
-                while True:
-                    x = random.randint(1, len(maze.layout[0]) - 2)
-                    y = random.randint(1, len(maze.layout) - 2)
-                    if maze.is_empty(x, y):
-                        maze.place_fruit(x, y)
-                        break
-
-    # Start a thread to spawn fruits
-    fruit_thread = threading.Thread(target=spawn_fruits, daemon=True)
-    fruit_thread.start()
-
     return maze, pacman, ghosts
+
+
+def spawn_fruits(maze):
+    """Spawn two fruits after a predefined time."""
+    fruits_spawned = 0
+    while fruits_spawned < 2:
+        x = random.randint(1, len(maze.layout[0]) - 2)
+        y = random.randint(1, len(maze.layout) - 2)
+        if maze.is_empty(x, y):  # Ensure no wall, Pac-Man, or ghost is at this position
+            maze.place_fruit(x, y)
+            fruits_spawned += 1
 
 
 def main():
@@ -71,6 +65,15 @@ def main():
         timer = Timer(limit=60)
         timer.start()
 
+        # Slower ghost movement (e.g., move every 500ms)
+        def move_ghosts():
+            for ghost in ghosts:
+                ghost.move(maze)
+            root.after(200, move_ghosts)  # Schedule next move after 500ms
+
+        # Start the ghost movement loop
+        root.after(200, move_ghosts)
+
         # Function to handle user input
         def handle_keypress(event):
             direction_map = {
@@ -87,10 +90,6 @@ def main():
         root.bind("<KeyPress>", handle_keypress)
 
         def game_loop():
-            # Move ghosts
-            for ghost in ghosts:
-                ghost.move(maze)
-
             # Update GUI
             gui.update_maze()
             gui.show_score(pacman.score)
