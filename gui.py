@@ -9,10 +9,6 @@ class PacManGUI:
         self.maze = None
         self.pacman = None
         self.ghosts = []
-        self.pacman_image = None
-
-        # Load the Pac-Man image
-        self.pacman_image = tk.PhotoImage(file="pacman.png")
 
     def setup(self, maze, pacman, ghosts):
         self.maze = maze
@@ -34,7 +30,7 @@ class PacManGUI:
                     )
                 elif cell == "P":
                     self.canvas.create_image(
-                        (x + 0.5) * 20, (y + 0.5) * 20, image=self.pacman_image
+                        (x + 0.5) * 20, (y + 0.5) * 20, image=self.pacman.pacman_image  # Use PacMan's resized image
                     )
                 elif cell == "G":
                     self.canvas.create_oval(
@@ -57,4 +53,5 @@ class PacManGUI:
         self.canvas.create_text(
             200, 30, text=f"Time Left: {time_left}s", fill="white", font=("Arial", 16)
         )
+
 

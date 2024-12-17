@@ -8,23 +8,23 @@ class PacMan:
         self.canvas = canvas  # Pass canvas to PacMan
 
         try:
-           
-            self.image = Image.open("pacman.png")  
-            resized_image = self.image.resize((10, 10), Image.LANCZOS)  
-            self.pacman_image = ImageTk.PhotoImage(resized_image)  
+            # Load Pac-Man image
+            self.image = Image.open("pacman.png")  # Ensure the path is correct
+            
+            # Resize the image to 10x10 pixels (or whatever size you want)
+            resized_image = self.image.resize((10, 10), Image.LANCZOS)  # Resize to 10x10
+            self.pacman_image = ImageTk.PhotoImage(resized_image)  # Convert to Tkinter image format
             print("Pac-Man image loaded successfully!")
 
-            
+            # Create Pac-Man image on the canvas at the initial position
             self.pacman_sprite = self.canvas.create_image(
                 (self.x * 20) + 10, (self.y * 20) + 10, image=self.pacman_image, anchor="center"
             )
-          
-            self.canvas.image = self.pacman_image
 
         except Exception as e:
             print(f"Error loading image: {e}")
-            self.pacman_image = None  
-            self.pacman_sprite = None  
+            self.pacman_image = None  # If the image fails to load, set it to None
+            self.pacman_sprite = None  # Set pacman_sprite to None if image loading fails
 
         if not self.pacman_image:
             print("Pac-Man image is not available!")
@@ -60,13 +60,6 @@ class PacMan:
             # Update position of Pac-Man on the canvas
             self.x, self.y = new_x, new_y
             self.canvas.coords(self.pacman_sprite, (self.x * 20) + 10, (self.y * 20) + 10)  # Move Pac-Man image
-
-            # Resize the image each time before moving (like your friend's approach)
-            resized_image = self.image.resize((10, 10), Image.LANCZOS)  # Resize each time to 10x10
-            self.pacman_image = ImageTk.PhotoImage(resized_image)  # Recreate the Tkinter image
-
-            # Update the canvas with the resized image
-            self.canvas.itemconfig(self.pacman_sprite, image=self.pacman_image)
 
             # Check for and collect dots
             if maze.is_dot(self.x, self.y):
