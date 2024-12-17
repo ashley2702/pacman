@@ -48,18 +48,18 @@ class Maze:
     def is_fruit(self, x, y):
         return self.layout[y][x] == "F"
     
-    def is_ghost(self, x, y):
-    # Check if the given position is occupied by a ghost
-        return self.layout[y][x] == "G"
+    
 
 
     def place_fruit(self, x, y):
+        """Place fruit on the maze and track the position."""
         self.layout[y][x] = "F"
         self.fruit_positions.append((x, y))
-    
+
     def remove_fruit(self, x, y):
+        """Remove fruit from the maze and update the fruit positions."""
         if (x, y) in self.fruit_positions:
-            self.fruit_positions.remove((x, y))  # Remove fruit from list
+            self.fruit_positions.remove((x, y))
         self.update_position(x, y, ".")
 
     def place_pacman(self, x, y):
@@ -81,4 +81,5 @@ class Maze:
             if self.is_empty(x, y) and (x, y) not in self.fruit_positions:
                 self.place_fruit(x, y)
                 fruits_spawned += 1
+                print(f"Fruit spawned at ({x}, {y})")  # Debug print to confirm fruit placement1
         

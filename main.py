@@ -35,17 +35,6 @@ def setup_game(gui):
     return maze, pacman, ghosts
 
 
-def spawn_fruits(maze):
-    """Spawn two fruits after a predefined time."""
-    fruits_spawned = 0
-    while fruits_spawned < 2:
-        x = random.randint(1, len(maze.layout[0]) - 2)
-        y = random.randint(1, len(maze.layout) - 2)
-        if maze.is_empty(x, y):  # Ensure no wall, Pac-Man, or ghost is at this position
-            maze.place_fruit(x, y)
-            fruits_spawned += 1
-
-
 def main():
     # Menu for game start
     menu = Menu()
@@ -65,11 +54,19 @@ def main():
         timer = Timer(limit=60)
         timer.start()
 
-        # Slower ghost movement (e.g., move every 500ms)
+        # Function to spawn fruits after 10 seconds
+        def spawn_fruits():
+            maze.spawn_fruits()  # Call the spawn_fruits() method to place 2 fruits
+            print("Fruits spawned!")  # Debugging message
+
+        # Spawn fruits after 10 seconds
+        root.after(10000, spawn_fruits)  # Call spawn_fruits() after 10 seconds
+
+        # Slower ghost movement (e.g., move every 200ms)
         def move_ghosts():
             for ghost in ghosts:
                 ghost.move(maze)
-            root.after(200, move_ghosts)  # Schedule next move after 500ms
+            root.after(200, move_ghosts)  # Schedule next move after 200ms
 
         # Start the ghost movement loop
         root.after(200, move_ghosts)
@@ -99,8 +96,14 @@ def main():
             if timer.remaining_time() <= 0:
                 gui.update_maze()
                 print("Time's up! Game Over!")
+
+                # Shadow Effect - Red Glow
                 gui.canvas.create_text(
-                    200, 200, text="Time's up! Game Over!", fill="white", font=("Arial", 20)
+                    300, 475, text="TIME'S UP! GAME OVER!", fill="#FF0000", font=("Courier", 28, "bold")
+                )
+                # Top Layer - White Text
+                gui.canvas.create_text(
+                    300, 475, text="TIME'S UP! GAME OVER!", fill="#FFFFFF", font=("Courier", 28, "bold")
                 )
                 root.after(3000, root.quit)
                 return
@@ -110,9 +113,17 @@ def main():
                 if pacman.x == ghost.x and pacman.y == ghost.y:
                     gui.update_maze()
                     print("Game Over! Pac-Man was caught by a ghost!")
+
+                    # Shadow Effect - Red Glow
                     gui.canvas.create_text(
-                        200, 200, text="Game Over! Caught by a Ghost!", fill="red", font=("Arial", 20)
+                        300, 475, text="GAME OVER! CAUGHT BY A GHOST!", fill="#FF0000", font=("Courier", 28, "bold")
                     )
+                    # Top Layer - White Text
+                    gui.canvas.create_text(
+                        300, 475, text="GAME OVER! CAUGHT BY A GHOST!", fill="#FFFFFF", font=("Courier", 28, "bold")
+                    )
+
+                    # Close the game after 3 seconds
                     root.after(3000, root.quit)
                     return
 
@@ -124,9 +135,17 @@ def main():
             ):
                 gui.update_maze()
                 print("You Win!")
+
+                # Shadow Effect - Yellow Glow
                 gui.canvas.create_text(
-                    200, 200, text="You Win!", fill="green", font=("Arial", 20)
+                    300, 475, text="YOU WIN!", fill="#FFD700", font=("Courier", 28, "bold")
                 )
+                # Top Layer - White Text
+                gui.canvas.create_text(
+                    300, 475, text="YOU WIN!", fill="#FFFFFF", font=("Courier", 28, "bold")
+                )
+
+                # Close the game after 3 seconds
                 root.after(3000, root.quit)
                 return
 
