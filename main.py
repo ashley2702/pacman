@@ -20,9 +20,9 @@ def setup_game():
 
     # Initialize ghosts
     ghosts = [
-        Ghost(10, 3, "Blinky"),
-        Ghost(15, 5, "Pinky"),
-        Ghost(3, 6, "Inky")
+        Ghost(10, 3, "1"),
+        Ghost(15, 5, "2"),
+        Ghost(3, 6, "3")
     ]
     for ghost in ghosts:
         maze.place_ghost(ghost.x, ghost.y)

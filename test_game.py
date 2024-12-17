@@ -10,7 +10,7 @@ class TestPacManGame(unittest.TestCase):
         self.ghost = Ghost(10, 3, "Blinky")
 
     def test_pacman_movement(self):
-        def test_pacman_movement(self):
+        
     # Move right (valid move)
             self.pacman.move("right", self.maze)
             self.assertEqual((self.pacman.x, self.pacman.y), (2, 1))  # Correct based on maze layout

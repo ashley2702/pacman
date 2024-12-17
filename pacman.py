@@ -14,11 +14,22 @@ class PacMan:
             new_x -= 1
         elif direction == "right":
             new_x += 1
+        
+        if new_x < 0:  # Left boundary
+            new_x = len(maze.layout[0]) - 8
+        elif new_x >= len(maze.layout[0]) - 8:  # Right boundary
+            new_x = 0
+
 
     # Check if movement is valid
         if not maze.is_wall(new_x, new_y):
         # Clear old position
             maze.update_position(self.x, self.y, " ")
+        
+        if maze.is_wall(new_x, new_y):
+            print(f"Blocked by wall at: ({new_x}, {new_y})")
+        else:
+            print(f"Moved to: ({new_x}, {new_y})")
         
         # Update Pac-Man's position
             self.x, self.y = new_x, new_y
