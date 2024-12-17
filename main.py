@@ -10,12 +10,13 @@ import threading
 
 
 
-def setup_game():
+def setup_game(gui):
     # Initialize maze
     maze = Maze()
 
     # Initialize Pac-Man
-    pacman = PacMan(1, 1)
+    pacman = PacMan(1, 1, gui.canvas)  # Pass the canvas from gui to PacMan
+
     maze.place_pacman(pacman.x, pacman.y)
 
     # Initialize ghosts
@@ -63,7 +64,7 @@ def main():
         gui = PacManGUI(root)
 
         # Game setup
-        maze, pacman, ghosts = setup_game()
+        maze, pacman, ghosts = setup_game(gui)
         gui.setup(maze, pacman, ghosts)
 
         # Timer
