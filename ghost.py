@@ -20,7 +20,7 @@ class Ghost:
             elif direction == "right":
                 new_x += 1
 
-            if not maze.is_wall(new_x, new_y) and maze.layout[new_y][new_x] != "P":
+            if not maze.is_wall(new_x, new_y):
                 maze.update_position(self.x, self.y, ".")
                 self.x, self.y = new_x, new_y
                 maze.place_ghost(self.x, self.y)

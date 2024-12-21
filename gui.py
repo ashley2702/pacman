@@ -3,7 +3,7 @@ import tkinter as tk
 class PacManGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Pac-Man Game")
+        self.root.title("Pac-Man")
         self.canvas = tk.Canvas(root, width=580, height=500, bg="black")
         self.canvas.pack()
         self.maze = None
@@ -46,12 +46,11 @@ class PacManGUI:
 
     def show_score(self, score):
         self.canvas.create_text(
-            300, 440, text=f"Score: {score}", fill="#FFFF00", font=("Courier", 18, "bold")  # Bright yellow, retro style
+            300, 440, text=f"Score: {score}", fill="#FFFF00", font=("Courier", 18, "bold")  
     )
-
     def show_timer(self, time_left):
         self.canvas.create_text(
-            300, 475, text=f"Time Left: {time_left}s", fill="#FF0000", font=("Courier", 18, "bold")  # Red timer
+            300, 475, text=f"Time Left: {time_left}s", fill="#FF0000", font=("Courier", 18, "bold") 
     )
 
 
