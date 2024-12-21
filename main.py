@@ -22,7 +22,6 @@ def setup_game(gui):
     for ghost in ghosts:
         maze.place_ghost(ghost.x, ghost.y)
 
-    # dots (need 240 in total) 
     for y in range(len(maze.layout)):
         for x in range(len(maze.layout[y])):
             if maze.is_empty(x, y):
@@ -33,8 +32,7 @@ def setup_game(gui):
 
 def main():
     root = tk.Tk()
-    # this size to match the menu
-    root.geometry("580x500")
+    root.geometry("580x500") # this size to match the menu
     gui = PacManGUI(root)
 
     def start_game():
@@ -55,8 +53,7 @@ def main():
 
         root.after(200, move_ghosts)
 
-        # Function to handle user input
-        def handle_keypress(event):
+        def handle_keypress(event):  # Function to handle user input
             direction_map = {
                 "Up": "up",
                 "Down": "down",
@@ -90,9 +87,8 @@ def main():
                 root.after(3000, lambda: menu.display_main_menu())
                 return
 
-            # Check collision with ghosts adn output game over message
-            for ghost in ghosts:
-                if pacman.x == ghost.x and pacman.y == ghost.y:
+            for ghost in ghosts:  
+                if pacman.x == ghost.x and pacman.y == ghost.y: # Check collision with ghosts adn output game over message
                     gui.update_maze()
                     print("Game Over! Pac-Man was caught by a ghost!")
 
