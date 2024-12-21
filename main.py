@@ -3,9 +3,9 @@ from gui import PacManGUI
 from maze import Maze
 from pacman import PacMan
 from ghost import Ghost
-from menu import Menu
 from timer import Timer
-import random
+from menu import Menu
+
 
 
 def setup_game(gui):
@@ -36,16 +36,12 @@ def setup_game(gui):
 
 
 def main():
-    # Menu for game start
-    menu = Menu()
-    menu.display()
-    choice = menu.select_option()
+    # Initialize GUI
+    root = tk.Tk()
+    root.geometry("580x500")
+    gui = PacManGUI(root)
 
-    if choice == "start":
-        # Initialize GUI
-        root = tk.Tk()
-        gui = PacManGUI(root)
-
+    def start_game():
         # Game setup
         maze, pacman, ghosts = setup_game(gui)
         gui.setup(maze, pacman, ghosts)
@@ -96,6 +92,9 @@ def main():
             if timer.remaining_time() <= 0:
                 gui.update_maze()
                 print("Time's up! Game Over!")
+                gui.canvas.create_text(
+                300, 440, text=f"FINAL SCORE: {pacman.score}", fill="#FFFFFF", font=("Courier", 20, "bold")
+                )
 
                 # Shadow Effect - Red Glow
                 gui.canvas.create_text(
@@ -105,7 +104,7 @@ def main():
                 gui.canvas.create_text(
                     300, 475, text="TIME'S UP! GAME OVER!", fill="#FFFFFF", font=("Courier", 28, "bold")
                 )
-                root.after(3000, root.quit)
+                root.after(3000, lambda: menu.display_main_menu())
                 return
 
             # Check collision with ghosts
@@ -113,6 +112,10 @@ def main():
                 if pacman.x == ghost.x and pacman.y == ghost.y:
                     gui.update_maze()
                     print("Game Over! Pac-Man was caught by a ghost!")
+
+                    gui.canvas.create_text(
+                    300, 440, text=f"FINAL SCORE: {pacman.score}", fill="#FFFFFF", font=("Courier", 20, "bold")
+                    )
 
                     # Shadow Effect - Red Glow
                     gui.canvas.create_text(
@@ -124,7 +127,7 @@ def main():
                     )
 
                     # Close the game after 3 seconds
-                    root.after(3000, root.quit)
+                    root.after(3000, lambda: menu.display_main_menu())
                     return
 
             # Check win condition
@@ -136,6 +139,10 @@ def main():
                 gui.update_maze()
                 print("You Win!")
 
+                gui.canvas.create_text(
+                300, 440, text=f"FINAL SCORE: {pacman.score}", fill="#FFD700", font=("Courier", 20, "bold")
+                
+                )
                 # Shadow Effect - Yellow Glow
                 gui.canvas.create_text(
                     300, 475, text="YOU WIN!", fill="#FFD700", font=("Courier", 28, "bold")
@@ -146,7 +153,7 @@ def main():
                 )
 
                 # Close the game after 3 seconds
-                root.after(3000, root.quit)
+                root.after(3000, lambda: menu.display_main_menu())
                 return
 
             # Schedule the next update (100ms)
@@ -154,7 +161,14 @@ def main():
 
         # Start the game loop
         game_loop()
-        root.mainloop()
+
+    # Create the menu
+    menu = Menu(root, gui, start_game)
+
+    # Display the main menu on startup
+    menu.display_main_menu()
+
+    root.mainloop()
 
 
 if __name__ == "__main__":

@@ -56,7 +56,7 @@ class PacMan:
         # Boundary teleportation logic
         if new_x < 0:  # Left boundary
             new_x = len(maze.layout[0]) - 1
-        elif new_x >= len(maze.layout[0]) - 1:  # Right boundary
+        elif new_x >= len(maze.layout[0]) - 0:  # Right boundary
             new_x = 0
 
         # Check if movement is valid
