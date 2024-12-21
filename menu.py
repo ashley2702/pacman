@@ -61,7 +61,7 @@ class Menu:
             highlightcolor="red",        # Color of the border when focused
             highlightthickness=2,
             command=lambda: messagebox.showinfo(
-                "Instructions", "Use arrow keys to move.\nAvoid the ghosts and collect all dots!"
+                "Instructions", "Use arrow keys to move.\nAvoid the ghosts and collect all dots and fruits!"
             )
         )
         self.gui.canvas.create_window(290, 350, window=instructions_button)
