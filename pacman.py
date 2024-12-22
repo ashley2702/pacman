@@ -23,10 +23,13 @@ class PacMan:
             self.pacman_sprite = None
 
     def rotate_image(self, angle):
-        if self.original_image: 
-            rotated_image = self.original_image.rotate(angle) 
-            self.pacman_image = ImageTk.PhotoImage(rotated_image) 
-            self.canvas.itemconfig(self.pacman_sprite, image=self.pacman_image) 
+        if self.original_image:  
+            if angle == 180:  
+                flipped_image = self.original_image.transpose(Image.FLIP_LEFT_RIGHT)
+                self.pacman_image = ImageTk.PhotoImage(flipped_image)
+            else:
+                rotated_image = self.original_image.rotate(angle)
+                self.pacman_image = ImageTk.PhotoImage(rotated_image)
 
     def move(self, direction, maze):
         if self.pacman_sprite is None:
@@ -70,11 +73,9 @@ class PacMan:
 
     def collect_dot(self):
         self.score += 10
-        print(f"Dot collected! Score: {self.score}")
 
     def collect_fruit(self, maze):
         self.score += 100
-        print(f"Fruit collected! Score: {self.score}")
 
         # Remove the fruit from the maze when eaten. 
         maze.remove_fruit(self.x, self.y)

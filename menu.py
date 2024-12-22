@@ -7,6 +7,7 @@ def pulsate_button(button, color1, color2):
         new_color = color1 if current_color == color2 else color2
         button.configure(highlightbackground=new_color)
         button.after(500, pulsate_button, button, color1, color2)
+
 class Menu:
     def __init__(self, root, gui, start_game_callback):
         self.root = root
@@ -56,8 +57,7 @@ class Menu:
             highlightbackground="red",  
             highlightcolor="red",       
             highlightthickness=2,
-            command=lambda: messagebox.showinfo(
-            )
+            command=lambda: messagebox.showinfo("Instructions", "Use arrow keys to move.\nAvoid the ghosts and collect all dots and fruits!")
         )
         self.gui.canvas.create_window(290, 350, window=instructions_button)
         self.menu_buttons.append(instructions_button)
@@ -80,7 +80,7 @@ class Menu:
     def clear_menu(self):
         self.gui.canvas.delete()  
 
-        for button in self.menu_buttons:  # removes the buttons before the game starts as it caused bugs
+        for button in self.menu_buttons:  # removes the buttons before the game starts, as it caused bugs
             button.destroy()
         self.menu_buttons.clear()  
     
