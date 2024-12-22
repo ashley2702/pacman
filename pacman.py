@@ -30,6 +30,8 @@ class PacMan:
             else:
                 rotated_image = self.original_image.rotate(angle)
                 self.pacman_image = ImageTk.PhotoImage(rotated_image)
+                
+            self.canvas.itemconfig(self.pacman_sprite, image=self.pacman_image)
 
     def move(self, direction, maze):
         if self.pacman_sprite is None:
