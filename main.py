@@ -88,7 +88,7 @@ def main():
                 return
 
             for ghost in ghosts:  
-                if pacman.x == ghost.x and pacman.y == ghost.y: # Check collision with ghosts adn output game over message
+                if pacman.x == ghost.x and pacman.y == ghost.y: # Check collision with ghosts and output game over message
                     gui.update_maze()
                     print("Game Over! Pac-Man was caught by a ghost!")
 
